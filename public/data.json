@@ -1,0 +1,75 @@
+{
+  "dataSet": [
+    {
+      "projectId": "chipotle",
+      "data": [
+        {
+          "launchTime": "0.246",
+          "buildTime": "5",
+          "creationDate": 1626069318
+        },
+        {
+          "launchTime": "0.256",
+          "buildTime": "3",
+          "creationDate": 1626155718
+        },
+        {
+          "launchTime": "0.266",
+          "buildTime": "7",
+          "creationDate": 1626242118
+        },
+        {
+          "launchTime": "0.236",
+          "buildTime": "8",
+          "creationDate": 1626328518
+        },
+        {
+          "launchTime": "0.226",
+          "buildTime": "5",
+          "creationDate": 1626414918
+        },
+        {
+          "launchTime": "0.296",
+          "buildTime": "6",
+          "creationDate": 1626501318
+        }
+      ]
+    },
+    {
+      "projectId": "lilly",
+      "data": [
+        {
+          "launchTime": "0.900",
+          "buildTime": "5",
+          "creationDate": 1626069318
+        },
+        {
+          "launchTime": "0.756",
+          "buildTime": "3",
+          "creationDate": 1626155718
+        },
+        {
+          "launchTime": "0.266",
+          "buildTime": "7",
+          "creationDate": 1626242118
+        },
+        {
+          "launchTime": "0.236",
+          "buildTime": "8",
+          "creationDate": 1626328518
+        },
+        {
+          "launchTime": "0.226",
+          "buildTime": "5",
+          "creationDate": 1626414918
+        },
+        {
+          "launchTime": "0.296",
+          "buildTime": "6",
+          "creationDate": 1626501318
+        }
+      ]
+    }
+  ]
+}
+
