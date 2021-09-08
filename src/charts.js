@@ -1,145 +1,3 @@
-// import * as ReactDOM from "react-dom";
-
-// import React, { useState, useEffect } from "react";
-// import Hammer from "hammerjs";
-
-// import { Line } from "react-chartjs-2";
-// import { Bar } from "react-chartjs-2";
-// import { PieChart } from "react-chartjs-2";
-// import axios from "axios";
-// // import Data from "./data.json"
-
-// const Charts = () => {
-//   const [chartData, setChartData] = useState({});
-//   const [employeeSalary, setEmployeeSalary] = useState([]);
-//   const [employeeAge, setEmployeeAge] = useState([]);
-//   const [timing, setTiming] = useState([]);
-//   const chart = () => {
-//     let empSal = [];
-//     let empAge = [];
-//     let formattedDate = (date) => {
-//       return new Date(date).toLocaleDateString("en-US");;
-//     };
-//     let url = "https://62n395k23e.execute-api.us-east-2.amazonaws.com/Dev/metrics"
-//     const getdata = async () => {
-//       try {
-//         const { data } = await axios.get(
-//           encodeURI( url )
-//         );
-//         console.log(data);
-//         return data;
-//       } catch (error) {
-//         throw error;
-//       }
-//     };
-//     getdata();
-//     axios.get( url )
-//     .then((res) => {
-//         console.log(res);
-//         let dataIndex1 = res['Items'][0];
-//         console.log('dataIndex1: ', dataIndex1);
-
-//         // let sortedResponse = res['Items'].sort((a,b) => (a.creationTimestamp > b.creationTimestamp) ? 1 : -1)
-//         // let timings = sortedResponse.map((item) => {
-//         //   return formattedDate(item.creationTimestamp);
-//         // });
-        
-//         // let data = sortedResponse.map((item) => {
-//         //   let obj = {};
-//         //   var randomColor = Math.floor(Math.random()*16777215).toString(16);
-//         //   obj.label = item.projectId;
-//         //   obj.data = sortedResponse.map((data) => data.launchTime);
-//         //   obj.backgroundColor = randomColor;
-//         //   return obj;
-//         // });
-        
-//         // setChartData({
-//         //   labels: timings,
-//         //   datasets: data,
-//         // });
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//     console.log(empSal, empAge);
-//   };
-
-//   useEffect(() => {
-//     chart();
-//   }, []);
-//   console.log(chartData);
-//   return (
-//     <div className="App">
-//       {/* <div>
-//         <h3>LaunchTime</h3>
-//       </div> */}
-
-//       <div style={{ height: "1000px", width: "1000px" }}>
-//         <Line
-//           data={chartData}
-//           options={{
-//             responsive: true,
-//             title: { text: "THICCNESS SCALE", display: true },
-//             scales: {
-//               yAxes: [
-//                 {
-//                   ticks: {
-//                     autoSkip: true,
-//                     beginAtZero: true,
-//                   },
-//                   gridLines: {
-//                     display: false,
-//                   },
-//                 },
-//               ],
-//               xAxes: [
-//                 {
-//                   gridLines: {
-//                     display: false,
-//                   },
-//                 },
-//               ],
-//             },
-//           }}
-//         />
-//       </div>
-//       <div style={{ height: "1000px", width: "1000px" }}>
-//         <Bar
-//           data={chartData}
-//           options={{
-//             responsive: true,
-//             title: { text: "THICCNESS SCALE", display: true },
-//             scales: {
-//               yAxes: [
-//                 {
-//                   ticks: {
-//                     autoSkip: true,
-//                     maxTicksLimit: 10,
-//                     beginAtZero: true,
-//                   },
-//                   gridLines: {
-//                     display: false,
-//                   },
-//                 },
-//               ],
-//               xAxes: [
-//                 {
-//                   gridLines: {
-//                     display: false,
-//                   },
-//                 },
-//               ],
-//             },
-//           }}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Charts;
-
-///////////////////////////////////////////////
 import * as ReactDOM from "react-dom";
 
 import React, { useState, useEffect } from "react";
@@ -150,9 +8,9 @@ import axios from "axios";
 // import Data from "./data.json"
 
 let formattedDate = (date) => {
-  const newDate = new Date(date).toLocaleDateString("en-US")
-  console.log(newDate)
-  return newDate;
+  const d = new Date(date);
+  const newDate = d.getHours() + ":" + d.getMinutes() + ", " + d.toLocaleDateString();
+   return newDate;
 }
 const Charts = () => {
   const [launchTimeChartData, setLaunchChartData] = useState({});
@@ -168,9 +26,12 @@ const Charts = () => {
         dataSets = res.data.Items.map(item => {
           let obj = {};
           obj.label = item.projectId;
-          obj.data = item.launchTime.map(item => { return item.value});
-          obj.backgroundColor = ["rgba(255, 206, 132, 0.2)"];
-          timings = item.launchTime.map(data => formattedDate(data.recordedTime));
+          item.launchTime.sort((a,b) => (a.recordedTime > b.recordedTime) ? 1 : ((b.recordedTime > a.recordedTime) ? -1 : 0))
+          obj.data = item.launchTime.map(d => { return d.value });
+          console.log('obj.data: ', obj.data);
+          obj.borderColor = "#" + ((1<<24)*Math.random() | 0).toString(16);
+          obj.borderWidth = 1;
+          timings = item.launchTime.map(d => formattedDate(d.recordedTime));
           return obj;
         });
 
@@ -189,7 +50,7 @@ const Charts = () => {
   }, []);
   return (
     <div className="App">
-      <div><h1>Charts</h1></div>
+      <div><h1>Launch Time</h1></div>
       <div style={{ height: "1000px", width: "1000px" }}>
         <Line
           data={launchTimeChartData}
@@ -225,3 +86,5 @@ const Charts = () => {
 };
 
 export default Charts;
+
+// https://www.chartjs.org/docs/latest/charts/line.html
